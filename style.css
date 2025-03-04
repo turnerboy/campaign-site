@@ -1,0 +1,59 @@
+/* Basic layout so the image appears on the left if wide, or bottom if narrow */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+  .left-section, .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  /* On small screens (phones), we’ll stack vertically */
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column-reverse;
+    }
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  .timer, .button-container {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  /* Simple modal styling */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal {
+    background: #fff;
+    padding: 2rem;
+    max-width: 500px;
+    width: 80%;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+  }
+  .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }

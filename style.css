@@ -1,59 +1,183 @@
-/* Basic layout so the image appears on the left if wide, or bottom if narrow */
-body {
+/* Base styles */
+* {
+    box-sizing: border-box;
     margin: 0;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
+    padding: 0;
   }
-  .left-section, .right-section {
-    flex: 1;
+  
+  body {
+    font-family: 'Montserrat', sans-serif; /* Example McMaster-ish font */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+  
+  /* Container for all content (except modal) */
+  .container {
+    position: relative;
+    min-height: 100vh; /* So it can accommodate the pinned image */
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 1rem;
   }
-  /* On small screens (phones), we’ll stack vertically */
-  @media (max-width: 768px) {
-    body {
-      flex-direction: column-reverse;
-    }
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  .timer, .button-container {
+  
+  /* Header text area */
+  .header-text {
     margin: 1rem 0;
     text-align: center;
   }
-  /* Simple modal styling */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.5);
-    display: none;
+  
+  .header-text h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .highlight {
+    color: #7a003c;  /* Maroon color for emphasis */
+    font-weight: 700;
+    font-size: 2.2rem;
+  }
+  
+  /* Countdown timer styling */
+  .timer {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #333;
+  }
+  
+  /* Button row */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
     justify-content: center;
+  }
+  
+  /* McMaster-Style Button */
+  .mcmaster-btn {
+    background-color: #7a003c; /* Maroon */
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .mcmaster-btn:hover {
+    background-color: #fede00; /* Yellow on hover */
+    color: #000; /* Switch to black text */
+  }
+  
+  .arrow-btn {
+    display: inline-flex;
     align-items: center;
   }
-  .modal {
-    background: #fff;
-    padding: 2rem;
-    max-width: 500px;
-    width: 80%;
-    border-radius: 10px;
-    position: relative;
+  
+  .arrow {
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  /* Image pinned at bottom */
+  .image-wrapper {
+    width: 100%;
+    position: absolute; /* so we can pin to bottom */
+    bottom: 0;
+    left: 0;
     text-align: center;
   }
+  
+  /* Candidate image style */
+  .candidate-image {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  /* On large screens, we want a side-by-side layout */
+  @media (min-width: 768px) {
+    .container {
+      flex-direction: row; /* side by side */
+      align-items: flex-start;
+      justify-content: space-evenly;
+    }
+  
+    .header-text {
+      flex: 1;
+      text-align: left;
+    }
+  
+    .button-row {
+      flex: 1;
+      justify-content: flex-start;
+    }
+  
+    .image-wrapper {
+      position: absolute;
+      bottom: 0;
+      right: 0; /* pin to bottom-right if you prefer */
+      text-align: right;
+    }
+  
+    .candidate-image {
+      max-width: 300px;
+    }
+  }
+  
+  /* MODAL STYLES */
+  
+  /* Dark overlay covering the entire screen */
+  .modal-overlay {
+    position: fixed;
+    display: none;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s forwards;
+    z-index: 999;
+  }
+  
+  /* The modal box */
+  .modal {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    animation: slideIn 0.4s forwards;
+    overflow-y: auto;
+    max-height: 80vh; /* so the text doesn't overflow screen */
+  }
+  
+  /* Close button */
   .close-btn {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    border: none;
     background: transparent;
-    font-size: 1.25rem;
+    border: none;
+    font-size: 2rem;
     cursor: pointer;
   }
+  
+  /* Fade in for the overlay */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  /* Slide in for the modal */
+  @keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+  
+  /* Fade-out animation could be added with JS toggling classes if you want a smooth close. */
+  

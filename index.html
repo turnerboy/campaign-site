@@ -2,119 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My Election Countdown</title>
+  <title>Vote for Sriganesh Kaniarasu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style.css">
+
+  <!-- Example of using Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Montserrat is just an example; pick a font that matches McMaster’s style if known -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Left side: Photo -->
-  <div class="left-section">
-    <img src="candidate-me.jpg" alt="Candidate Photo" />
-  </div>
+  <div class="container">
 
-  <!-- Right side: Timer, Statement, Notification Bell, etc. -->
-  <div class="right-section">
-    <h1>My Campaign</h1>
-    
-    <div class="timer">
-      <h2 id="countdown"></h2>
+    <!-- Name + Title -->
+    <div class="header-text">
+      <h1>Vote for <span class="highlight">Sriganesh Kaniarasu</span> Today!</h1>
+      <div class="timer">
+        <h2 id="countdown"></h2>
+      </div>
     </div>
 
-    <div class="button-container">
-      <!-- Button to open the statement modal -->
-      <button id="open-statement">Read My Statement</button>
-
-      <!-- Button to request notification permission -->
-      <button id="notify-btn">Notify Me When Time Is Up</button>
-
-      <!-- This link could redirect to your voting page once available -->
-      <button onclick="window.location.href='https://example.com/vote'">
-        Go to Voting Page
+    <!-- Buttons -->
+    <div class="button-row">
+      <!-- Statement button -->
+      <button id="open-statement" class="mcmaster-btn">Read My Statement</button>
+      <!-- Notification button -->
+      <button id="notify-btn" class="mcmaster-btn">Notify Me</button>
+      <!-- “Vote Now” button with arrow -->
+      <button 
+        onclick="window.location.href='https://macvote.mcmaster.ca'" 
+        class="mcmaster-btn arrow-btn">
+          Vote Now <span class="arrow">&rarr;</span>
       </button>
     </div>
+
+    <!-- Candidate photo pinned to bottom -->
+    <div class="image-wrapper">
+      <img src="candidate-me.jpg" alt="Candidate Photo" class="candidate-image">
+    </div>
+
   </div>
 
-  <!-- Modal Structure -->
+  <!-- Modal Overlay -->
   <div id="modal-overlay" class="modal-overlay">
     <div class="modal">
       <button class="close-btn" id="close-statement">&times;</button>
-      <h3>My Statement</h3>
+      <h2>My Statement</h2>
       <p>
-        This is where your detailed candidate statement goes. 
-        Explain why you’re running, your qualifications, and so on!
+        Dear Members of the Senate,<br><br>
+        I am writing to express my strong interest in serving on the Senate at McMaster University. 
+        As an engineering design graduate student, my academic background and practical experiences 
+        have prepared me to contribute meaningfully to the Senate’s responsibilities, particularly 
+        in promoting educational resources and academic events that enrich the student experience.<br><br>
+
+        During my time at McMaster, I have embraced the principles of design thinking, working closely 
+        with organizations such as St. Joseph’s, the City of Hamilton, the Hamilton Street Railway, 
+        CityLAB Hamilton, and the Royal Botanical Gardens. These collaborations have honed my ability 
+        to identify challenges, propose innovative solutions, and engage diverse stakeholders. I 
+        believe these skills will be invaluable in supporting the Senate’s mandate to foster academic 
+        excellence and transparent communication within the university community.<br><br>
+
+        Living close to campus has afforded me the opportunity to attend various academic events 
+        regularly. However, I have observed that attendance is often low, and many students miss out 
+        on the benefits of educational events and academic lectures. I am committed to ensuring that 
+        every student, regardless of their proximity to McMaster’s campus, can benefit from these 
+        opportunities. My goal is to increase the transparency of these events, improve access, and 
+        encourage greater participation among all students so that everyone can share the same valuable 
+        experience.<br><br>
+
+        Having thoroughly reviewed the McMaster University Act of 1976, I am prepared to uphold its 
+        responsibilities and contribute my user-centred design perspective to enhance academic engagement. 
+        I am eager to leverage my expertise, dedication, and advocacy to support the Senate’s goals and 
+        improve the overall student experience.<br><br>
+
+        I am excited to contribute actively and make a positive impact with the members of the Senate. 
+        Thank you for your consideration, and I look forward to the opportunity to serve.<br><br>
+
+        Sincerely,<br>
+        Sriganesh Kaniarasu
       </p>
     </div>
   </div>
 
   <script>
-    // --- Countdown Timer (March 4) ---
-    const countdownElement = document.getElementById('countdown');
-    // Change this to your official end date/time if you have one
-    const targetDate = new Date('2025-03-04T00:00:00');
+    // Countdown Timer for March 4, 2025
+const countdownElement = document.getElementById('countdown');
+const targetDate = new Date('2025-03-04T00:00:00');
 
-    function updateCountdown() {
-      const now = new Date();
-      const diff = targetDate - now;
-      
-      if (diff <= 0) {
-        countdownElement.textContent = "Voting is Live!";
-        return;
-      }
+function updateCountdown() {
+  const now = new Date();
+  const diff = targetDate - now;
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+  if (diff <= 0) {
+    countdownElement.textContent = "Voting is Live!";
+    return;
+  }
 
-      countdownElement.textContent = 
-        `${days}d ${hours}h ${minutes}m ${seconds}s until voting starts!`;
-    }
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+  countdownElement.textContent =
+    `${days}d ${hours}h ${minutes}m ${seconds}s until voting starts!`;
+}
 
-    // --- Modal Logic ---
-    const modalOverlay = document.getElementById('modal-overlay');
-    const openStatementBtn = document.getElementById('open-statement');
-    const closeStatementBtn = document.getElementById('close-statement');
+setInterval(updateCountdown, 1000);
+updateCountdown();
 
-    openStatementBtn.addEventListener('click', () => {
-      modalOverlay.style.display = 'flex';
-    });
+// Modal Logic
+const modalOverlay = document.getElementById('modal-overlay');
+const openStatementBtn = document.getElementById('open-statement');
+const closeStatementBtn = document.getElementById('close-statement');
 
-    closeStatementBtn.addEventListener('click', () => {
-      modalOverlay.style.display = 'none';
-    });
+openStatementBtn.addEventListener('click', () => {
+  modalOverlay.style.display = 'flex';
+  // Optionally blur background: 
+  document.body.style.filter = 'blur(4px)'; 
+  modalOverlay.style.filter = 'none'; 
+});
 
-    // --- Basic Notification Demo ---
-    const notifyBtn = document.getElementById('notify-btn');
-    notifyBtn.addEventListener('click', () => {
-      // Request browser notification permission
-      if ('Notification' in window) {
-        Notification.requestPermission().then(permission => {
-          if (permission === 'granted') {
-            // Just for demonstration, we schedule a notification at the target time
-            const timeUntilTarget = targetDate - new Date();
-            if (timeUntilTarget > 0) {
-              setTimeout(() => {
-                new Notification('Voting Time!', {
-                  body: 'The countdown has ended. Go vote!'
-                });
-              }, timeUntilTarget);
-              alert('You will be notified when it’s time!');
-            } else {
-              alert('It’s already voting time!');
-            }
-          } else {
-            alert('Notification permission denied.');
-          }
-        });
+closeStatementBtn.addEventListener('click', () => {
+  modalOverlay.style.display = 'none';
+  document.body.style.filter = 'none';
+});
+
+// Notification Logic
+const notifyBtn = document.getElementById('notify-btn');
+notifyBtn.addEventListener('click', () => {
+  if ('Notification' in window) {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        const timeUntilTarget = targetDate - new Date();
+        if (timeUntilTarget > 0) {
+          setTimeout(() => {
+            new Notification('Voting Time!', {
+              body: 'The countdown has ended. Go vote!'
+            });
+          }, timeUntilTarget);
+          alert('You will be notified when it’s time!');
+        } else {
+          alert('It’s already voting time!');
+        }
       } else {
-        alert('Notifications are not supported in this browser.');
+        alert('Notification permission denied.');
       }
     });
-  </script>
+  } else {
+    alert('Notifications are not supported in this browser.');
+  }
+});
 
+  </script>
 </body>
 </html>

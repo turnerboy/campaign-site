@@ -1,183 +1,142 @@
-/* Base styles */
+/* Reset & Base Styles */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
   
   body {
-    font-family: 'Montserrat', sans-serif; /* Example McMaster-ish font */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-  }
-  
-  /* Container for all content (except modal) */
-  .container {
-    position: relative;
-    min-height: 100vh; /* So it can accommodate the pinned image */
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Header text area */
-  .header-text {
-    margin: 1rem 0;
-    text-align: center;
-  }
-  
-  .header-text h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .highlight {
-    color: #7a003c;  /* Maroon color for emphasis */
-    font-weight: 700;
-    font-size: 2.2rem;
-  }
-  
-  /* Countdown timer styling */
-  .timer {
-    font-size: 1.2rem;
-    margin: 1rem 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #fff;
     color: #333;
   }
   
-  /* Button row */
-  .button-row {
+  /* Main Container (two halves) */
+  .container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    justify-content: center;
-  }
-  
-  /* McMaster-Style Button */
-  .mcmaster-btn {
-    background-color: #7a003c; /* Maroon */
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 600;
-  }
-  
-  .mcmaster-btn:hover {
-    background-color: #fede00; /* Yellow on hover */
-    color: #000; /* Switch to black text */
-  }
-  
-  .arrow-btn {
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .arrow {
-    margin-left: 0.5rem;
-    font-size: 1.2rem;
-  }
-  
-  /* Image pinned at bottom */
-  .image-wrapper {
+    flex-direction: row;
     width: 100%;
-    position: absolute; /* so we can pin to bottom */
+    min-height: 100vh; /* Enough height to pin the image on desktop */
+  }
+  
+  /* Left section for the image, pinned to bottom on desktop screens */
+  .left-section {
+    flex: 1;
+    position: relative;
+    overflow: hidden; /* prevent scrollbars if large image */
+  }
+  
+  /* Pinned image on desktop; see media query below for mobile changes */
+  .candidate-image {
+    position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Right section for text */
+  .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* center vertically */
+    align-items: center;       /* center horizontally */
+    padding: 2rem;
     text-align: center;
   }
   
-  /* Candidate image style */
-  .candidate-image {
-    max-width: 200px;
-    width: 100%;
-    height: auto;
-    margin-bottom: 1rem;
+  /* Heading highlight */
+  .highlight {
+    font-weight: bold;
+    color: #7a003c; /* Maroon, optional */
   }
   
-  /* On large screens, we want a side-by-side layout */
-  @media (min-width: 768px) {
+  /* Yellow line */
+  .yellow-line {
+    width: 50px;
+    height: 4px;
+    background-color: #fdbf57; /* The requested yellow color */
+    margin: 1rem auto;
+    border-radius: 2px;
+  }
+  
+  /* Buttons */
+  .button-container {
+    margin-top: 1.5rem;
+  }
+  
+  .btn {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #7a003c; /* maroon */
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .btn:hover {
+    background-color: #fdbf57; /* yellow hover */
+    color: #000;
+  }
+  
+  /* Responsive layout for tablet & mobile */
+  @media (max-width: 768px) {
     .container {
-      flex-direction: row; /* side by side */
-      align-items: flex-start;
-      justify-content: space-evenly;
+      flex-direction: column; /* stack top-to-bottom */
     }
   
-    .header-text {
-      flex: 1;
-      text-align: left;
-    }
-  
-    .button-row {
-      flex: 1;
-      justify-content: flex-start;
-    }
-  
-    .image-wrapper {
-      position: absolute;
-      bottom: 0;
-      right: 0; /* pin to bottom-right if you prefer */
-      text-align: right;
+    .left-section {
+      order: 2; /* image on bottom */
+      height: auto;
     }
   
     .candidate-image {
-      max-width: 300px;
+      position: static; /* no pinning on mobile/tablet */
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  
+    .right-section {
+      order: 1; /* text on top */
     }
   }
   
-  /* MODAL STYLES */
-  
-  /* Dark overlay covering the entire screen */
+  /* Modal Styles */
   .modal-overlay {
     position: fixed;
-    display: none;
     top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background-color: rgba(0,0,0,0.6);
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: none;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.4s forwards;
     z-index: 999;
   }
   
-  /* The modal box */
   .modal {
     background: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 2rem;
     width: 90%;
     max-width: 600px;
+    border-radius: 8px;
     position: relative;
-    animation: slideIn 0.4s forwards;
+    max-height: 80vh;
     overflow-y: auto;
-    max-height: 80vh; /* so the text doesn't overflow screen */
   }
   
-  /* Close button */
   .close-btn {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     background: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
   }
-  
-  /* Fade in for the overlay */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  
-  /* Slide in for the modal */
-  @keyframes slideIn {
-    from { transform: translateY(-30px); opacity: 0; }
-    to   { transform: translateY(0);     opacity: 1; }
-  }
-  
-  /* Fade-out animation could be added with JS toggling classes if you want a smooth close. */
   
